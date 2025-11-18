@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Lugares Seguros</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="bg-grid" aria-hidden="true"></div>
+    <nav class="nav">
+        <div class="nav-inner">
+            <div class="brand" aria-label="Marca">
+                <span class="brand-badge" aria-hidden="true"></span>
+                Lugares Seguros
+            </div>
+            <ul class="nav-links" role="menubar" aria-label="Navegación principal">
+                <li role="none"><a role="menuitem" href="#docs-title">Documentación</a></li>
+                <li role="none"><a role="menuitem" href="#endpoints-title">Endpoints</a></li>
+                <li role="none"><a role="menuitem" href="/api/lugares">Lugares</a></li>
+            </ul>
+            <div class="nav-tools">
+                <label class="search" aria-label="Buscar">
+                    <input type="search" placeholder="Buscar" aria-label="Buscar" />
+                </label>
+                <div class="lang-switch" role="group" aria-label="Idioma">
+                    <button class="lang-btn active" data-lang="es" title="Español" aria-pressed="true">🇪🇸 ES</button>
+                    <button class="lang-btn" data-lang="en" title="English" aria-pressed="false">🇬🇧 EN</button>
+                </div>
+                <button id="themeToggle" class="btn tertiary" aria-label="Cambiar tema">Tema</button>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <section class="hero">
+            <h1>API de Lugares Seguros</h1>
+            <p class="lead">Pensada para familias y personas autistas: simple, clara y accesible.</p>
+            <div class="badges" aria-label="Características">
+                <span class="badge-pill">Sin API key</span>
+                <span class="badge-pill">Gratis</span>
+                <span class="badge-pill">Multiidioma</span>
+            </div>
+        </section>
+
+        <section class="cards" aria-labelledby="endpoints-title">
+            <div class="card feature-card">
+                <div class="card-head">
+                    <span class="card-icon" aria-hidden="true">🔗</span>
+                    <h3 id="endpoints-title">Endpoints</h3>
+                </div>
+                <p>Rutas públicas disponibles:</p>
+                <nav class="endpoints" aria-label="Lista de endpoints">
+                    <a class="endpoint-link" href="/api/usuarios"><span class="kbd">GET</span> /api/usuarios</a>
+                    <a class="endpoint-link" href="/api/lugares"><span class="kbd">GET</span> /api/lugares</a>
+                    <a class="endpoint-link" href="/api/resenas"><span class="kbd">GET</span> /api/resenas</a>
+                </nav>
+            </div>
+
+            <div class="card feature-card">
+                <div class="card-head">
+                    <span class="card-icon" aria-hidden="true">🧪</span>
+                    <h3>Cómo probar</h3>
+                </div>
+                <p>Usá Postman, curl o fetch:</p>
+                <pre><code>curl -X GET http://localhost:3000/api/lugares</code></pre>
+                <pre><code>fetch('/api/lugares').then(r => r.json())</code></pre>
+                <pre><code>POST /api/lugares\nContent-Type: application/json\n{ "nombre": "Parque Central" }</code></pre>
+            </div>
+
+            <div class="card feature-card">
+                <div class="card-head">
+                    <span class="card-icon" aria-hidden="true">♿</span>
+                    <h3>Accesibilidad</h3>
+                </div>
+                <p>Tipografías legibles, alto contraste, foco visible y modo claro/oscuro.</p>
+            </div>
+        </section>
+
+        <section class="docs-teaser" aria-labelledby="teaser-title">
+            <h2 id="teaser-title">Documentación (resumen)</h2>
+            <p>Cómo usar la API en pocas palabras:</p>
+            <ul class="teaser-list">
+                <li>Autodescriptiva y REST: respuestas en JSON.</li>
+                <li>Lugares: crear, listar, obtener por ID, actualizar y eliminar.</li>
+                <li>Reseñas: crear, listar y listar por lugar.</li>
+        </ul>
+        </section>
+
+        <section class="docs" aria-labelledby="docs-title">
+            <h2 id="docs-title">Documentación</h2>
+            <div class="accordion">
+                <details>
+                    <summary>Usuarios</summary>
+                    <div class="endpoint">
+                        <div class="endpoint-head"><span class="badge get">GET</span> /api/usuarios</div>
+                        <p>Listar usuarios.</p>
+                        <pre><code>GET /api/usuarios</code></pre>
+                        <pre><code>200 OK
+                         { "data": [ { "_id": "...", "nombre": "Ana" } ] }
+                        </code></pre>
+                    </div>
+                    <div class="endpoint">
+                        <div class="endpoint-head"><span class="badge post">POST</span> /api/usuarios</div>
+                        <p>Crear usuario.</p>
+                        <table class="param-table">
+                            <thead><tr><th>Campo</th><th>Tipo</th><th>Req.</th></tr></thead>
+                            <tbody>
+                                <tr><td>nombre</td><td>string</td><td>Sí</td></tr>
+                                <tr><td>email</td><td>string</td><td>Sí</td></tr>
+                                <tr><td>password</td><td>string</td><td>Sí</td></tr>
+                            </tbody>
+                        </table>
+                        <pre><code>POST /api/usuarios
+                         Content-Type: application/json
+                         { "nombre": "Ana", "email": "ana@mail.com", "password": "123" }
+                        </code></pre>
+                        <pre><code>201 Created
+                         { "mensaje": "Usuario creado", "data": { "_id": "..." } }
+                        </code></pre>
+                    </div>
+                </details>
+                <details>
+                    <summary>Lugares</summary>
+                    <div class="endpoint">
+                        <div class="endpoint-head"><span class="badge get">GET</span> /api/lugares</div>
+                        <p>Listar lugares.</p>
+                        <pre><code>GET /api/lugares</code></pre>
+                        <pre><code>200 OK
+                         { "data": [ { "_id": "...", "nombre": "Parque Central" } ] }
+                        </code></pre>
+                    </div>
+                    <div class="endpoint">
+                        <div class="endpoint-head"><span class="badge get">GET</span> /api/lugares/:id</div>
+                        <p>Obtener lugar por ID.</p>
+                        <pre><code>GET /api/lugares/64f...abc</code></pre>
+                    </div>
+                    <div class="endpoint">
+                        <div class="endpoint-head"><span class="badge post">POST</span> /api/lugares</div>
+                        <p>Crear lugar.</p>
+                        <table class="param-table">
+                            <thead><tr><th>Campo</th><th>Tipo</th><th>Req.</th></tr></thead>
+                            <tbody>
+                                <tr><td>nombre</td><td>string</td><td>Sí</td></tr>
+                                <tr><td>direccion</td><td>string</td><td>Sí</td></tr>
+                            </tbody>
+                        </table>
+                        <pre><code>POST /api/lugares
+                         Content-Type: application/json
+                         { "nombre": "Parque Central", "direccion": "Av. Siempreviva 742" }
+                        </code></pre>
+                    </div>
+                    <div class="endpoint">
+                        <div class="endpoint-head"><span class="badge put">PUT</span> /api/lugares/:id</div>
+                        <p>Actualizar lugar.</p>
+                    </div>
+                    <div class="endpoint">
+                        <div class="endpoint-head"><span class="badge del">DELETE</span> /api/lugares/:id</div>
+                        <p>Eliminar lugar.</p>
+                    </div>
+                </details>
+                <details>
+                    <summary>Reseñas</summary>
+                    <div class="endpoint">
+                        <div class="endpoint-head"><span class="badge get">GET</span> /api/resenas</div>
+                        <p>Listar reseñas.</p>
+                    </div>
+                    <div class="endpoint">
+                        <div class="endpoint-head"><span class="badge get">GET</span> /api/resenas/lugar/:lugarId</div>
+                        <p>Reseñas por lugar.</p>
+                    </div>
+                    <div class="endpoint">
+                        <div class="endpoint-head"><span class="badge post">POST</span> /api/resenas</div>
+                        <p>Crear reseña.</p>
+                        <table class="param-table">
+                            <thead><tr><th>Campo</th><th>Tipo</th><th>Req.</th></tr></thead>
+                            <tbody>
+                                <tr><td>lugarId</td><td>ObjectId</td><td>Sí</td></tr>
+                                <tr><td>usuarioId</td><td>ObjectId</td><td>Sí</td></tr>
+                                <tr><td>texto</td><td>string</td><td>Sí</td></tr>
+                            </tbody>
+                        </table>
+                        <pre><code>POST /api/resenas
+                         Content-Type: application/json
+                         { "lugarId": "<ID_LUGAR>", "usuarioId": "<ID_USUARIO>", "texto": "Muy cómodo" }
+                        </code></pre>
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        <section class="quickstart" aria-labelledby="qs-title">
+            <h2 id="qs-title">Quick Start</h2>
+            <ol class="steps">
+                <li>
+                    <h4>1. Iniciá la API</h4>
+                    <p>Configura tu <code>.env</code> con <code>PORT</code> y <code>URI_DB</code>. Luego corré <code>npm start</code>.</p>
+                </li>
+                <li>
+                    <h4>2. Hacé tu primer GET</h4>
+                    <pre><code>GET http://localhost:3000/api/lugares
+                    200 OK
+                    {
+                    "data": [ { "_id": "...", "nombre": "Parque Central" } ]
+                    }</code></pre>
+                </li>
+                <li>
+                    <h4>3. Creá una reseña</h4>
+                    <pre><code>POST http://localhost:3000/api/resenas
+                    Content-Type: application/json
+                    {
+                     "lugarId": "<ID_LUGAR>",
+                     "usuarioId": "<ID_USUARIO>",
+                     "texto": "Muy cómodo y tranquilo"
+                    }</code></pre>
+                </li>
+            </ol>
+        </section>
+
+        <section class="guides" aria-labelledby="guides-title">
+            <h2 id="guides-title">Guías rápidas</h2>
+            <p>Usá estos ejemplos para probar rápidamente los endpoints más importantes.</p>
+
+            <div class="guide-grid">
+                <article class="guide">
+                    <h3>Lugares</h3>
+                    <h4>Listar lugares</h4>
+                    <pre><code>curl -X GET http://localhost:3000/api/lugares
+                        # JavaScript (fetch)
+                        fetch('/api/lugares').then(r => r.json()).then(console.log)
+                    </code></pre>
+
+                    <h4>Crear lugar</h4>
+                    <pre><code>curl -X POST http://localhost:3000/api/lugares \
+                     -H "Content-Type: application/json" \
+                     -d '{
+                     "nombre": "Parque Central",
+                     "direccion": "Av. Siempreviva 742",
+                     "tipo": "parque",
+                     "capacidad": 100,
+                     "sensorial": { "ruido": 2, "luz": 3, "multitudes": 2 }
+                     }'
+                     # JavaScript (fetch)
+                     fetch('/api/lugares', {
+                     method: 'POST',
+                     headers: { 'Content-Type': 'application/json' },
+                     body: JSON.stringify({ nombre: 'Parque Central', direccion: 'Av. Siempreviva 742' })
+                     }).then(r => r.json()).then(console.log)
+                    </code></pre>
+                </article>
+
+                <article class="guide">
+                    <h3>Reseñas</h3>
+                    <h4>Listar reseñas</h4>
+                    <pre><code>curl -X GET http://localhost:3000/api/resenas
+                    # JavaScript (fetch)
+                    fetch('/api/resenas').then(r => r.json()).then(console.log)</code></pre>
+
+                    <h4>Crear reseña</h4>
+                    <pre><code>curl -X POST http://localhost:3000/api/resenas \
+                    -H "Content-Type: application/json" \
+                    -d '{
+                    "lugarId": "&lt;ID_LUGAR&gt;",
+                    "usuarioId": "&lt;ID_USUARIO&gt;",
+                    "texto": "Espacio tranquilo con poca luz y sin ruidos fuertes"
+                    }'
+                    # JavaScript (fetch)
+                    fetch('/api/resenas', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ lugarId: '...', usuarioId: '...', texto: 'Muy cómodo' })
+                    }).then(r => r.json()).then(console.log)</code></pre>
+                </article>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-grid" aria-label="Información académica">
+                <div class="footer-block">
+                    <h4>Trabajo</h4>
+                    <dl>
+                        <div class="row"><dt>Proyecto</dt><dd>API de Lugares Seguros</dd></div>
+                        <div class="row"><dt>Materia</dt><dd>Aplicaciones Híbridas</dd></div>
+                        <div class="row"><dt>Docente</dt><dd>Jonathan Cruz</dd></div>
+                        <div class="row"><dt>Comisión</dt><dd>DWT4AP</dd></div>
+                    </dl>
+                </div>
+                <div class="footer-block">
+                    <h4>Alumno/a</h4>
+                    <dl>
+                        <div class="row"><dt>Nombre</dt><dd>Sabrina Belen</dd></div>
+                        <div class="row"><dt>Apellido</dt><dd>Ansede</dd></div>
+                        <div class="row"><dt>Año</dt><dd>2025</dd></div>
+                        <div class="row"><dt>Institución</dt><dd>Escuela Da Vinci</dd></div>
+                    </dl>
+                </div>
+            </div>
+            <div class="container">
+             <p>© 2025 Mi App Lugares Seguros</p>
+             <p>Creado por: Sabrina</p>
+             <p>Última actualización: <span id="fecha"></span></p>
+           </div>
+            <p class="foot-note">Hecho con <span aria-hidden="true">❤️</span> pensando en la comodidad sensorial.</p>
+        </footer>
+    </div>
+    <script src="/app.js"></script>
+</body>
+</html>
